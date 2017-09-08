@@ -1,3 +1,7 @@
+<?php
+include("logica-usuario.php");
+include("mostra-alerta.php");
+?>
 <html>
 <head>
     <title>Minha loja</title>
@@ -6,7 +10,6 @@
     <link href="css/loja.css" rel="stylesheet"/>
 </head>
 <body>
-<?php include("logica-usuario.php")?>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.php">Minha Loja</a>
@@ -46,3 +49,5 @@
 <div class="container">
 
     <div class="principal">
+        <?php  mostraAlerta("success"); ?>
+        <?php mostraAlerta("danger"); ?>

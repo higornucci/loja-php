@@ -5,22 +5,6 @@ if (isset($_GET["login"]) && $_GET["login"] == true) {
     <?php
 }
 ?>
-<?php
-if (isset($_SESSION["danger"])) {
-    ?>
-    <p class="alert-danger"><?= $_SESSION["danger"] ?></p>
-    <?php
-    unset($_SESSION["danger"]);
-}
-?>
-<?php
-if(isset($_SESSION["success"])) {
-    ?>
-    <p class="alert-success"><?= $_SESSION["success"]?></p>
-    <?php
-    unset($_SESSION["success"]);
-}
-?>
 <h1>Bem Vindo!</h1>
 <?php
 if (usuarioEstaLogado()) {
