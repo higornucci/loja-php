@@ -1,5 +1,4 @@
 <?php include("cabecalho.php");
-include("logica-usuario.php");
 if (isset($_GET["login"]) && $_GET["login"] == true) {
     ?>
     <p class="alert-success">Logado com sucesso!</p>
@@ -17,6 +16,13 @@ if(isset($_GET["falhaDeSeguranca"])) {
 if (isset($_GET["login"]) && $_GET["login"] == false) {
     ?>
     <p class="alert-danger">Usuário ou senha inválida!</p>
+    <?php
+}
+?>
+<?php
+if(isset($_GET["logout"]) && $_GET["logout"]==true) {
+    ?>
+    <p class="alert-danger">Deslogado com sucesso</p>
     <?php
 }
 ?>
