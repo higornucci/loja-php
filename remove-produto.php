@@ -5,6 +5,6 @@ include("banco-produto.php");
 
 $id = $_POST['id'];
 removeProduto($conexao, $id);
-
-header("Location: produto-lista.php?removido=true");
+$_SESSION["success"] = "Produto removido com sucesso.";
+header("Location: produto-lista.php");
 die();
