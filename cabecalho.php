@@ -27,7 +27,7 @@ include("mostra-alerta.php");
                     <a class="nav-link" href="produto-lista.php">Produtos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="sobre.php">Sobre</a>
+                    <a class="nav-link" href="contato.php">Contato</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
