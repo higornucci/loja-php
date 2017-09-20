@@ -1,9 +1,15 @@
 <?php include("cabecalho.php");
-include("conecta.php");
-include("banco-categoria.php");
+require_once("conecta.php");
+require_once("banco-categoria.php");
+require_once("class/Produto.php");
+require_once("class/Categoria.php");
 verificaUsuario();
 $categorias = listaCategorias($conexao);
-$produto = array("nome" => "", "descricao" => "", "preco" => "", "categoria_id" => "1");
+$categoria = new Categoria();
+$categoria->id = 1;
+
+$produto = new Produto();
+$produto->categoria = $categoria;
 $usado = "";
 ?>
 <h1>Formulário de cadastro</h1>
