@@ -8,8 +8,7 @@ $categorias = listaCategorias($conexao);
 $categoria = new Categoria();
 $categoria->setId(1);
 
-$produto = new Produto();
-$produto->setCategoria($categoria);
+$produto = new Produto("", "", "", $categoria, "");
 $usado = "";
 ?>
 <h1>Formulário de cadastro</h1>
@@ -19,7 +18,9 @@ $usado = "";
         include("produto-formulario-base.php");
         ?>
         <tr>
-            <td><button class="btn btn-primary" type="submit">Cadastrar</button></td>
+            <td>
+                <button class="btn btn-primary" type="submit">Cadastrar</button>
+            </td>
         </tr>
     </table>
 </form>
