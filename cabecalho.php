@@ -1,4 +1,8 @@
 <?php
+function carregaClasse($nomeDaClasse) {
+    require_once("class/".$nomeDaClasse.".php");
+}
+spl_autoload_register("carregaClasse");
 include("logica-usuario.php");
 include("mostra-alerta.php");
 ?>

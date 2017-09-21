@@ -1,8 +1,6 @@
 <?php include("cabecalho.php");
 require_once("conecta.php");
 require_once("banco-categoria.php");
-require_once("class/Produto.php");
-require_once("class/Categoria.php");
 verificaUsuario();
 $categorias = listaCategorias($conexao);
 $categoria = new Categoria();
