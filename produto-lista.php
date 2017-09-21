@@ -1,14 +1,14 @@
 <?php include("cabecalho.php"); ?>
 <?php include("conecta.php"); ?>
-<?php include("banco-produto.php"); ?>
 
 <?php
+$produtoDao = new ProdutoDao($conexao);
 verificaUsuario();
-$produtos = listaProdutos($conexao);
+$produtos = $produtoDao->listaProdutos($conexao);
 ?>
 <table class="table table-striped table-bordered">
     <?php
-        $produtos = listaProdutos($conexao);
+        $produtos = $produtoDao->listaProdutos($conexao);
         foreach ($produtos as $produto) :
     ?>
         <tr>

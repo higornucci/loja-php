@@ -1,10 +1,13 @@
 <?php
-function carregaClasse($nomeDaClasse) {
-    require_once("class/".$nomeDaClasse.".php");
+function carregaClasse($nomeDaClasse)
+{
+    require_once("class/" . $nomeDaClasse . ".php");
 }
 spl_autoload_register("carregaClasse");
+error_reporting(E_ALL * E_NOTICE);
 include("logica-usuario.php");
-include("mostra-alerta.php");
+require_once("mostra-alerta.php");
+require_once("conecta.php")
 ?>
 <html>
 <head>
@@ -53,5 +56,5 @@ include("mostra-alerta.php");
 <div class="container">
 
     <div class="principal">
-        <?php  mostraAlerta("success"); ?>
+        <?php mostraAlerta("success"); ?>
         <?php mostraAlerta("danger"); ?>

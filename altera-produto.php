@@ -1,9 +1,6 @@
 <?php
 require_once("cabecalho.php");
-require_once("banco-produto.php");
-require_once("class/Produto.php");
-require_once("class/Categoria.php");
-
+$produtoDao = new ProdutoDao($conexao);
 $categoria = new Categoria();
 $categoria->setId($_POST['categoria_id']);
 
@@ -22,7 +19,7 @@ if (array_key_exists('usado', $_POST)) {
 $produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
 $produto->setId($_POST['id']);
 
-if (alteraProduto($conexao, $produto)) { ?>
+if ($produtoDao->alteraProduto($conexao, $produto)) { ?>
     <p class="text-success">O produto <?= $produto->getNome() ?>, <?= $produto->getPreco() ?> foi alterado.</p>
     <?php
 } else {

@@ -1,8 +1,8 @@
 <?php include("cabecalho.php");
 require_once("conecta.php");
-require_once("banco-categoria.php");
 verificaUsuario();
-$categorias = listaCategorias($conexao);
+$categoriaDao = new CategoriaDao($conexao);
+$categorias = $categoriaDao->listaCategorias($conexao);
 $categoria = new Categoria();
 $categoria->setId(1);
 
