@@ -1,6 +1,7 @@
 <?php
 
-class Produto {
+class Produto
+{
 
     private $id;
     private $nome;
@@ -9,7 +10,8 @@ class Produto {
     private $categoria;
     private $usado;
 
-    function __construct($nome, $preco, $descricao, Categoria $categoria, $usado) {
+    function __construct($nome, $preco, $descricao, Categoria $categoria, $usado)
+    {
         $this->nome = $nome;
         $this->preco = $preco;
         $this->descricao = $descricao;
@@ -17,36 +19,48 @@ class Produto {
         $this->usado = $usado;
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getNome() {
+    public function getNome()
+    {
         return $this->nome;
     }
 
-    public function getPreco() {
+    public function getPreco()
+    {
         return $this->preco;
     }
 
-    public function getDescricao() {
+    public function getDescricao()
+    {
         return $this->descricao;
     }
 
-    public function getCategoria() {
+    public function getCategoria()
+    {
         return $this->categoria;
     }
 
-    public function isUsado() {
+    public function isUsado()
+    {
         return $this->usado;
     }
 
-    public function setUsado($usado) {
+    public function setUsado($usado)
+    {
         $this->usado = $usado;
+    }
+
+    public function temIsbn() {
+        return $this instanceof Livro;
     }
 
     public function precoComDesconto($valor = 0.1) {

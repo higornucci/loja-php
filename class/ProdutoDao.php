@@ -15,11 +15,11 @@ class ProdutoDao
         $this->conexao = $conexao;
     }
 
-    function listaProdutos($conexao)
+    function listaProdutos()
     {
 
         $produtos = array();
-        $resultado = mysqli_query($conexao, "select p.*,c.nome as categoria_nome 
+        $resultado = mysqli_query($this->conexao, "select p.*,c.nome as categoria_nome 
 		from produtos as p join categorias as c on c.id=p.categoria_id");
 
         while ($produto_array = mysqli_fetch_assoc($resultado)) {
@@ -31,8 +31,15 @@ class ProdutoDao
             $preco = $produto_array['preco'];
             $descricao = $produto_array['descricao'];
             $usado = $produto_array['usado'];
+            $isbn = $produto_array['isbn'];
+            $tipoProduto = $produto_array['tipoProduto'];
 
-            $produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+            if ($tipoProduto == "Livro") {
+                $produto = new Livro($nome, $preco, $descricao, $categoria, $usado);
+                $produto->setIsbn($isbn);
+            } else {
+                $produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+            }
 
             $produto->setId($produto_array['id']);
 
@@ -42,57 +49,78 @@ class ProdutoDao
         return $produtos;
     }
 
-    function insereProduto($conexao, Produto $produto)
+    function insereProduto(Produto $produto)
     {
+        $isbn = "";
+        if ($produto->temIsbn()) {
+            $isbn = $produto->getIsbn();
+        }
+        $tipoProduto = get_class($produto);
+        $nome = mysqli_real_escape_string($this->conexao, $produto->getNome());
+        $descricao = mysqli_real_escape_string($this->conexao, $produto->getDescricao());
+        $query = "insert into produtos (nome, preco, descricao, categoria_id, usado, isbn, tipoProduto) 
+        values ('{$nome}', {$produto->getPreco()}, '{$descricao}', 
+                {$produto->getCategoria()->getId()}, {$produto->isUsado()}, 
+                '{$isbn}', '{$tipoProduto}')";
 
-        $nome = mysqli_real_escape_string($conexao, $produto->getNome());
-        $descricao = mysqli_real_escape_string($conexao, $produto->getDescricao());
-        $query = "insert into produtos (nome, preco, descricao, categoria_id, usado) 
-		values ('{$nome}', {$produto->getPreco()}, 
-			'{$descricao}', {$produto->getCategoria()->getId()}, 
-				{$produto->isUsado()})";
-
-        return mysqli_query($conexao, $query);
+        return mysqli_query($this->conexao, $query);
     }
 
-    function alteraProduto($conexao, Produto $produto)
+    function alteraProduto(Produto $produto)
     {
-        $nome = mysqli_real_escape_string($conexao, $produto->getNome());
-        $descricao = mysqli_real_escape_string($conexao, $produto->getDescricao());
+        $isbn = "";
+        if ($produto->temIsbn()) {
+            $isbn = $produto->getIsbn();
+        }
+
+        $tipoProduto = get_class($produto);
+        $nome = mysqli_real_escape_string($this->conexao, $produto->getNome());
+        $descricao = mysqli_real_escape_string($this->conexao, $produto->getDescricao());
         $query = "update produtos set nome = '{$nome}', 
 		preco = {$produto->getPreco()}, descricao = '{$descricao}', 
-			categoria_id= {$produto->getCategoria()->getId()}, 
-				usado = {$produto->isUsado()} where id = '{$produto->getId()}'";
+			categoria_id= '{$produto->getCategoria()->getId()}', 
+				usado = '{$produto->isUsado()}',
+				 isbn = '{$isbn}', 
+				 tipoProduto = '{$tipoProduto}'
+				 where id = '{$produto->getId()}'";
 
-        return mysqli_query($conexao, $query);
+        return mysqli_query($this->conexao, $query);
     }
 
-    function buscaProduto($conexao, $id)
+    function buscaProduto($id)
     {
 
         $query = "select * from produtos where id = {$id}";
-        $resultado = mysqli_query($conexao, $query);
+        $resultado = mysqli_query($this->conexao, $query);
         $produto_buscado = mysqli_fetch_assoc($resultado);
 
         $categoria = new Categoria();
         $categoria->setId($produto_buscado['categoria_id']);
 
         $nome = $produto_buscado['nome'];
-        $preco = $produto_buscado['preco'];
         $descricao = $produto_buscado['descricao'];
+        $preco = $produto_buscado['preco'];
         $usado = $produto_buscado['usado'];
+        $isbn = $produto_buscado['isbn'];
+        $tipoProduto = $produto_buscado['tipoProduto'];
 
-        $produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+        if ($tipoProduto == "Livro") {
+            $produto = new Livro($nome, $preco, $descricao, $categoria, $usado);
+            $produto->setIsbn($isbn);
+        } else {
+            $produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+        }
+
         $produto->setId($produto_buscado['id']);
 
         return $produto;
     }
 
-    function removeProduto($conexao, $id)
+    function removeProduto($id)
     {
 
         $query = "delete from produtos where id = {$id}";
 
-        return mysqli_query($conexao, $query);
+        return mysqli_query($this->conexao, $query);
     }
 }
